@@ -1,3 +1,6 @@
+[**DOWNLOAD**](https://github.com/STANTHECHEESEMAN/mousejiggler-UNCAPPED/releases/download/DOWNLOAD/Mouse_Jiggler_UNCAPPED.zip)
+
+
 Mouse Jiggler is a very simple piece of software whose sole function is to "fake" mouse input to Windows, and jiggle the mouse pointer back and forth.
 
 Useful for avoiding screensavers or other things triggered by idle detection that, for whatever reason, you can't turn off any other way; or as a quick way to stop a screensaver activating during an installation or when monitoring a long operation without actually having to muck about with the screensaver settings.
@@ -12,8 +15,6 @@ Installation
 
 Portable Version
 ----------------
-[**DOWNLOAD**](https://github.com/STANTHECHEESEMAN/mousejiggler-UNCAPPED/releases/download/DOWNLOAD/Mouse_Jiggler_UNCAPPED.zip)
-
 
 This is the only available version because I have no clue how to make the Installation version work with the modified build
 
