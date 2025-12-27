@@ -12,7 +12,7 @@ Installation
 
 Portable Version
 ----------------
-<h1>**[DOWNLOAD](https://github.com/STANTHECHEESEMAN/mousejiggler-UNCAPPED/releases/download/DOWNLOAD/Mouse_Jiggler_UNCAPPED.zip)**</h1>
+<h1>[**DOWNLOAD**](https://github.com/STANTHECHEESEMAN/mousejiggler-UNCAPPED/releases/download/DOWNLOAD/Mouse_Jiggler_UNCAPPED.zip)</h1>
 
 
 This is the only available version because I have no clue how to make the Installation version work with the modified build
