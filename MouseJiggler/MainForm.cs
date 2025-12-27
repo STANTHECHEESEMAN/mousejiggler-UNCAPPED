@@ -5,7 +5,7 @@
 // Created by: Alistair J R Young (avatar) at 2021/01/24 1:57 AM.
 // Updates by: Dimitris Panokostas (midwan)
 // Edited by STANTHECHEESEMAN: Fully replaced TrackBar with txtPeriod input
-//         Changed JigglePeriod to double with min 0.001 s
+//                             Changed JigglePeriod to double with min 0.001 s
 
 #endregion
 
