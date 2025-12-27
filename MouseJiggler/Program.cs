@@ -4,6 +4,7 @@
 // 
 // Created by: Alistair J R Young (avatar) at 2021/01/22 4:12 PM.
 // Updates by: Dimitris Panokostas (midwan)
+// Edited by STANTHECHEESEMAN: Fully replaced TrackBar with txtPeriod input
 
 #endregion
 
@@ -41,15 +42,13 @@ public static class Program
         try
         {
             if (instance.WaitOne(0))
-
-                // Parse arguments and do the appropriate thing.
             {
+                // Parse arguments and do the appropriate thing.
                 return GetCommandLineParser().Invoke(args);
             }
             else
             {
                 Console.WriteLine(@"Mouse Jiggler is already running. Aborting.");
-
                 return 1;
             }
         }
@@ -70,10 +69,12 @@ public static class Program
         Application.SetCompatibleTextRenderingDefault(false);
 
         // Run the application.
-        var mainForm = new MainForm(jiggle,
+        var mainForm = new MainForm(
+            jiggle,
             minimized,
             zen,
-            seconds);
+            seconds
+        );
 
         Application.Run(mainForm);
 
@@ -86,8 +87,9 @@ public static class Program
         var rootCommand = new RootCommand
         {
             Description = "Virtually jiggles the mouse, making the computer seem not idle.",
-            Handler =
-                CommandHandler.Create(new Func<bool, bool, bool, int, int>(RootHandler))
+            Handler = CommandHandler.Create(
+                new Func<bool, bool, bool, int, int>(RootHandler)
+            )
         };
 
         // -j --jiggle
@@ -112,13 +114,24 @@ public static class Program
         rootCommand.AddOption(optZen);
 
         // -s:60 --seconds:60
-        var optPeriod = new Option<int>(["--seconds", "-s"], "Set X number of seconds for the jiggle interval.")
+        var optPeriod = new Option<int>(
+            ["--seconds", "-s"],
+            "Set the number of seconds for the jiggle interval."
+        )
         {
             Argument = new Argument<int>(() => Settings.Default.JigglePeriod)
         };
-        optPeriod.AddValidator(p => p.GetValueOrDefault<int>() < 1 ? "Period cannot be shorter than 1 second." : null);
+
+        // Keep minimum validation only
         optPeriod.AddValidator(p =>
-            p.GetValueOrDefault<int>() > 10800 ? "Period cannot be longer than 10800 seconds." : null);
+            p.GetValueOrDefault<int>() < 1
+                ? "Period must be at least 1 second."
+                : null
+        );
+
+        // Removed maximum limit validator
+        // Users can now type any value they want
+
         rootCommand.AddOption(optPeriod);
 
         // Build the command line parser.
