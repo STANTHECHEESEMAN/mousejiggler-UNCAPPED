@@ -1,9 +1,11 @@
-﻿#region header
+#region header
 
 // MouseJiggler - MainForm.cs
 // 
 // Created by: Alistair J R Young (avatar) at 2021/01/24 1:57 AM.
 // Updates by: Dimitris Panokostas (midwan)
+// Edited: Fully replaced TrackBar with txtPeriod input
+//         Changed JigglePeriod to double with min 0.001 s
 
 #endregion
 
@@ -20,36 +22,25 @@ namespace ArkaneSystems.MouseJiggler;
 
 public partial class MainForm : Form
 {
-    /// <summary>
-    ///     Constructor for use by the form designer.
-    /// </summary>
     public MainForm()
-        : this(false, false, false, 1)
+        : this(false, false, false, 1.0)
     {
     }
 
-    public MainForm(bool jiggleOnStartup, bool minimizeOnStartup, bool zenJiggleEnabled, int jigglePeriod)
+    public MainForm(bool jiggleOnStartup, bool minimizeOnStartup, bool zenJiggleEnabled, double jigglePeriod)
     {
         InitializeComponent();
 
-        // Jiggling on startup?
         JiggleOnStartup = jiggleOnStartup;
-
-        // Set settings properties
-        // We do this by setting the controls, and letting them set the properties.
 
         cbMinimize.Checked = minimizeOnStartup;
         cbZen.Checked = zenJiggleEnabled;
 
-        // Validate jigglePeriod before setting it
-        if (jigglePeriod >= tbPeriod.Minimum && jigglePeriod <= tbPeriod.Maximum)
-            tbPeriod.Value = jigglePeriod;
-        else
-            // Handle invalid jigglePeriod value, e.g., set to default or raise an error
-            tbPeriod.Value = tbPeriod.Minimum; // or any default value within the range
+        // Set initial period
         JigglePeriod = jigglePeriod;
+        txtPeriod.Text = jigglePeriod.ToString("0.###");
 
-        // Component initial setting
+        // Initial tray menu visibility
         trayMenu.Items[1].Visible = !cbJiggling.Checked;
         trayMenu.Items[2].Visible = cbJiggling.Checked;
     }
@@ -71,7 +62,7 @@ public partial class MainForm : Form
         else
         {
             var ww = ZenJiggleEnabled ? "with" : "without";
-            niTray.Text = $@"Jiggling mouse every {JigglePeriod} s, {ww} Zen.";
+            niTray.Text = $@"Jiggling mouse every {JigglePeriod:0.###} s, {ww} Zen.";
         }
     }
 
@@ -119,12 +110,15 @@ public partial class MainForm : Form
         ZenJiggleEnabled = cbZen.Checked;
     }
 
-    private void tbPeriod_ValueChanged(object sender, EventArgs e)
+    private void txtPeriod_TextChanged(object sender, EventArgs e)
     {
-        JigglePeriod = tbPeriod.Value;
+        if (!double.TryParse(txtPeriod.Text, out var value) || value < 0.001)
+            return; // ignore invalid input
+
+        JigglePeriod = value;
     }
 
-    #endregion Property synchronization
+    #endregion
 
     #region Do the Jiggle!
 
@@ -148,13 +142,13 @@ public partial class MainForm : Form
             Helpers.Jiggle(0);
         else if (Zig)
             Helpers.Jiggle(4);
-        else //zag
+        else
             Helpers.Jiggle(-4);
 
         Zig = !Zig;
     }
 
-    #endregion Do the Jiggle!
+    #endregion
 
     #region Minimize and restore
 
@@ -173,7 +167,6 @@ public partial class MainForm : Form
         Visible = false;
         ShowInTaskbar = false;
         niTray.Visible = true;
-
         UpdateNotificationAreaText();
     }
 
@@ -184,22 +177,19 @@ public partial class MainForm : Form
         niTray.Visible = false;
     }
 
-    #endregion Minimize and restore
+    #endregion
 
     #region Settings property backing fields
 
-    private int _jigglePeriod;
-
+    private double _jigglePeriod;
     private bool _minimizeOnStartup;
-
     private bool _zenJiggleEnabled;
 
-    #endregion Settings property backing fields
+    #endregion
 
     #region Settings properties
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-
     public bool MinimizeOnStartup
     {
         get => _minimizeOnStartup;
@@ -213,7 +203,6 @@ public partial class MainForm : Form
     }
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-
     public bool ZenJiggleEnabled
     {
         get => _zenJiggleEnabled;
@@ -227,18 +216,19 @@ public partial class MainForm : Form
     }
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-
-    public int JigglePeriod
+    public double JigglePeriod
     {
         get => _jigglePeriod;
         set
         {
-            _jigglePeriod = value;
-            Settings.Default.JigglePeriod = value;
-            Settings.Default.Save();
+            _jigglePeriod = Math.Max(0.001, value); // enforce minimum
+            Settings.Default.JigglePeriod = (int)(_jigglePeriod * 1000); // save ms as int
 
-            jiggleTimer.Interval = value * 1000;
-            lbPeriod.Text = $@"{value} s";
+            // Timer interval in ms, capped at int.MaxValue
+            long intervalMs = (long)(_jigglePeriod * 1000);
+            jiggleTimer.Interval = intervalMs > int.MaxValue ? int.MaxValue : (int)intervalMs;
+
+            lbPeriod.Text = $@"{_jigglePeriod:0.###} s";
             OnPropertyChanged(nameof(JigglePeriod));
         }
     }
@@ -250,7 +240,7 @@ public partial class MainForm : Form
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    #endregion Settings properties
+    #endregion
 
     #region Minimize on start
 
