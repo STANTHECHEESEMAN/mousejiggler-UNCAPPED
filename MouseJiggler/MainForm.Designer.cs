@@ -1,32 +1,20 @@
-﻿
 namespace ArkaneSystems.MouseJiggler
 {
     partial class MainForm
     {
-        /// <summary>
-        ///  Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        ///  Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.components != null))
+            if (disposing && (components != null))
             {
-                this.components.Dispose();
+                components.Dispose();
             }
             base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
@@ -40,16 +28,17 @@ namespace ArkaneSystems.MouseJiggler
             cbJiggling = new System.Windows.Forms.CheckBox();
             panelSettings = new System.Windows.Forms.Panel();
             lbPeriod = new System.Windows.Forms.Label();
-            tbPeriod = new System.Windows.Forms.TrackBar();
+            txtPeriod = new System.Windows.Forms.TextBox(); // new text input
             cbMinimize = new System.Windows.Forms.CheckBox();
             cbZen = new System.Windows.Forms.CheckBox();
             trayMenu = new System.Windows.Forms.ContextMenuStrip();
             niTray = new System.Windows.Forms.NotifyIcon(components);
+
             flpLayout.SuspendLayout();
             panelBase.SuspendLayout();
             panelSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)tbPeriod).BeginInit();
             SuspendLayout();
+
             // 
             // jiggleTimer
             // 
@@ -133,7 +122,7 @@ namespace ArkaneSystems.MouseJiggler
             panelSettings.AutoSize = true;
             panelSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             panelSettings.Controls.Add(lbPeriod);
-            panelSettings.Controls.Add(tbPeriod);
+            panelSettings.Controls.Add(txtPeriod); // add TextBox
             panelSettings.Controls.Add(cbMinimize);
             panelSettings.Controls.Add(cbZen);
             panelSettings.Location = new System.Drawing.Point(9, 56);
@@ -146,30 +135,25 @@ namespace ArkaneSystems.MouseJiggler
             // lbPeriod
             // 
             lbPeriod.AutoSize = true;
-            lbPeriod.Location = new System.Drawing.Point(279, 55);
+            lbPeriod.Location = new System.Drawing.Point(230, 55);
             lbPeriod.Name = "lbPeriod";
             lbPeriod.Size = new System.Drawing.Size(27, 20);
             lbPeriod.TabIndex = 3;
             lbPeriod.Text = "1 s";
             // 
-            // tbPeriod
+            // txtPeriod
             // 
-            tbPeriod.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            tbPeriod.Location = new System.Drawing.Point(5, 83);
-            tbPeriod.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            tbPeriod.Maximum = 10800;
-            tbPeriod.Minimum = 1;
-            tbPeriod.Name = "tbPeriod";
-            tbPeriod.Size = new System.Drawing.Size(321, 56);
-            tbPeriod.TabIndex = 6;
-            tbPeriod.TickFrequency = 2;
-            tbPeriod.Value = 1;
-            tbPeriod.ValueChanged += tbPeriod_ValueChanged;
+            txtPeriod.Location = new System.Drawing.Point(10, 50); // adjust layout
+            txtPeriod.Name = "txtPeriod";
+            txtPeriod.Size = new System.Drawing.Size(100, 27);
+            txtPeriod.TabIndex = 6;
+            txtPeriod.Text = "1";
+            txtPeriod.TextChanged += txtPeriod_TextChanged;
             // 
             // cbMinimize
             // 
             cbMinimize.AutoSize = true;
-            cbMinimize.Location = new System.Drawing.Point(11, 49);
+            cbMinimize.Location = new System.Drawing.Point(11, 90);
             cbMinimize.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             cbMinimize.Name = "cbMinimize";
             cbMinimize.Size = new System.Drawing.Size(153, 24);
@@ -227,7 +211,6 @@ namespace ArkaneSystems.MouseJiggler
             panelBase.PerformLayout();
             panelSettings.ResumeLayout(false);
             panelSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)tbPeriod).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -237,7 +220,7 @@ namespace ArkaneSystems.MouseJiggler
         private System.Windows.Forms.Timer jiggleTimer;
         private System.Windows.Forms.FlowLayoutPanel flpLayout;
         private System.Windows.Forms.Panel panelSettings;
-        private System.Windows.Forms.TrackBar tbPeriod;
+        private System.Windows.Forms.TextBox txtPeriod; // new control
         private System.Windows.Forms.CheckBox cbMinimize;
         private System.Windows.Forms.CheckBox cbZen;
         private System.Windows.Forms.Panel panelBase;
@@ -250,4 +233,3 @@ namespace ArkaneSystems.MouseJiggler
         private System.Windows.Forms.ContextMenuStrip trayMenu;
     }
 }
-
