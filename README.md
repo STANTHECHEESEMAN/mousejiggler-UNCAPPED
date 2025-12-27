@@ -1,33 +1,24 @@
-mousejiggler
+mousejiggler UNCAPPED
 ============
 
 Mouse Jiggler is a very simple piece of software whose sole function is to "fake" mouse input to Windows, and jiggle the mouse pointer back and forth.
 
 Useful for avoiding screensavers or other things triggered by idle detection that, for whatever reason, you can't turn off any other way; or as a quick way to stop a screensaver activating during an installation or when monitoring a long operation without actually having to muck about with the screensaver settings.
 
+Also I found out, this helps with certain programs not detecting mouse cursor movement when using things such as pyauto programs.
+
+But now you can set the timer to just about anything, obviously you cant go below 0.001 because it could cause instabilities, and I don't know the max cap, but I'm sure there is some limitation to the max cap that can't be removed without reworking it.
+
 Installation
 ============
-
-The easiest means of installing Mouse Jiggler is using Chocolatey:
-
-`choco install mouse-jiggler`
-
-Bare releases continue to be available at right for installation without administrative permissions, although the .NET 5 Desktop runtime must be installed first.
-
-Please note that due to a compatibility issue with the Chocolatey shims, running Mouse Jiggler via the shim does not display command-line help or the Mouse Jiggler version when the -h/--help/-? or --version switches are used. To do so, Mouse Jiggler must be invoked directly. To easily discover the location of the original Mouse Jiggler executable for this purpose, run:
-
-`mousejiggler --shimgen-log`
+**NOT AVAILABLE ON THE UNCAPPED VERSION**
 
 Portable Version
 ----------------
 
-A portable version of Mouse Jiggler (i.e., one which does not require the .NET 5 runtime, and so can be installed on locked-down corporate machines that don't have it installed) is available on the releases page, as MouseJiggler-portable.zip. Just unzip and go.
+This is the only available version because I have no clue how to make the Installation version work with the modified build
 
-**DO NOT USE THIS VERSION IF YOU HAVE ANY OTHER ALTERNATIVE.**
-
-Let me put it to you this way. _Standard_ Mouse Jiggler, at the time of writing, is a single executable a mite under 1 MB in size. _Portable_ Mouse Jiggler is a folder of executables summing to approximately **83 MB**, for one of the most trivial applications imaginable, after all the assorted trimming-and-compressing magic is done. It's a bloated behemoth. If there is _any_ possibility that you will _ever_ run any other app that uses the .NET 5 runtime, you are much better off installing that and the regular version.
-
-The only reason this exists is for those poor sods whose IT department makes it impossible to do that, and may their deities have mercy on their souls.
+I removed the rest of the text because for some reason its mostly no longer true with this version as originally it said something about it being ~83MB but the folder was able to turn into only ~430KB
 
 Operation
 =========
@@ -38,37 +29,9 @@ Check the "Settings..." checkbox to reveal the settings; these should be relativ
 
 To minimize Mouse Jiggler to the notification area, click the down-arrow button.
 
-These settings are remembered from session to session. They can also be overridden by command-line options:
-
-```
-Usage:
-  MouseJiggler [options]
-
-Options:
-  -j, --jiggle               Start with jiggling enabled.
-  -m, --minimized            Start minimized (sets persistent option). [default: False]
-  -z, --zen                  Start with zen (invisible) jiggling enabled (sets persistent option). [default: False]
-  -s, --seconds <seconds>    Set number of seconds for the jiggle interval (sets persistent option). [default: 60]
-  --version                  Show version information
-  -?, -h, --help             Show help and usage information
-```
-
-The `-j` command-line switch tells Mouse Jiggler to commence jiggling immediately on startup.
-
-Bugs
-====
-
-When installed using Chocolatey, command-line help may not be displayed properly. See "installation" above.
-
-Features That Will Not Be Implemented
-=====================================
-
-This is a list of feature requests which I've decided won't be implemented in Mouse Jiggler for one reason or another, along with what those reasons are, just for reference:
-
- * Autorun on startup (because that's what the Startup group, Task Scheduler, etc. are for; it's inelegant to duplicate system facilities in a minimal app).
- * Timed startup/shutdown (again, Task Scheduler is for this).
-
 Support
 =======
 
-Mouse Jiggler is a free product provided without warranty or support.
+Mouse Jiggler UNCAPPED as well as the original is a free product provided without warranty or support.
+
+If you have any issues, just use the original [**HERE**](https://github.com/arkane-systems/mousejiggler)
